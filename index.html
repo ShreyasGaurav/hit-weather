@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIT Weather</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .card { background: #1e293b; padding: 2rem; border-radius: 12px; width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center; }
+    h2 { margin-top: 0; color: #38bdf8; }
+    button { background: #38bdf8; color: #0f172a; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 1rem; }
+    button:hover { background: #7dd3fc; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Haldia Weather</h2>
+    <p id="status">Loading forecast...</p>
+    <button onclick="fetchWeather()">Refresh</button>
+  </div>
+  <script>
+    async function fetchWeather() {
+      document.getElementById('status').innerText = 'Fetching live data...';
+      const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=22.0667&longitude=88.0698&current_weather=true');
+      const data = await res.json();
+      const w = data.current_weather;
+      document.getElementById('status').innerText = `${w.temperature}C | Wind: ${w.windspeed} km/h`;
+    }
+    fetchWeather();
+  </script>
+</body>
+</html>
